@@ -1,4 +1,35 @@
-<div>
-  <h1 class="font-bold text-4xl">Pages#home</h1>
-  <p>Find me in app/views/pages/home.html.erb</p>
+<div class="fixed inset-0 bg-[#FFFDF6] flex flex-col justify-between p-8 box-border overflow-y-auto">
+
+  <div class="flex justify-between items-center w-full">
+    <div>
+      <%= image_tag "logo.png", alt: "ContentFlow Logo", class: "h-6 w-auto" %>
+    </div>
+
+    <div>
+      <% if user_signed_in? %>
+        <%= link_to "Log out", destroy_user_session_path, data: { turbo_method: :delete }, class: "bg-red-500 hover:bg-orange-600 text-white font-medium py-2 px-4 rounded-xl transition duration-200 text-xs shadow-sm cursor-pointer" %>
+      <% end %>
+    </div>
+  </div>
+
+  <div class="flex-1 flex flex-col justify-center items-center w-full">
+    <div class="text-center space-y-4 max-w-md w-full mx-auto">
+
+      <% if user_signed_in? %>
+        <h1 class="text-3xl font-bold text-gray-900">Welcome back!</h1>
+        <p class="text-sm text-green-600 bg-green-50 px-4 py-2 rounded-full font-medium inline-block">
+          Active Session: <%= current_user.email %>
+        </p>
+      <% else %>
+        <div class="flex flex-col space-y-3 max-w-sm w-full mx-auto">
+          <%= link_to "Log in", new_user_session_path, class: "w-full bg-[#E25C37] hover:bg-[#c84e2e] text-white font-medium py-3 px-6 rounded-xl transition duration-200 text-sm inline-block text-center shadow-sm" %>
+          <%= link_to "Sign up", new_user_registration_path, class: "w-full border border-gray-300 bg-white hover:bg-gray-50 text-gray-700 font-medium py-3 px-6 rounded-xl transition duration-200 text-sm inline-block text-center shadow-sm" %>
+        </div>
+      <% end %>
+
+    </div>
+  </div>
+
+  <div class="h-6 invisible"></div>
+
 </div>
