@@ -10,8 +10,20 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.1].define(version: 2026_05_26_083721) do
+ActiveRecord::Schema[8.1].define(version: 2026_05_26_091033) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_catalog.plpgsql"
 
+  create_table "reports", force: :cascade do |t|
+    t.text "ai_answer"
+    t.string "audience"
+    t.string "content_topic"
+    t.string "content_type"
+    t.datetime "created_at", null: false
+    t.text "edited_answer"
+    t.string "goal"
+    t.text "prompt"
+    t.string "status"
+    t.datetime "updated_at", null: false
+  end
 end
