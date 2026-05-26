@@ -1,5 +1,72 @@
-<h1>Content Reports</h1>
+<!-- app/views/content_reports/index.html.erb -->
 
-<p>Here you will see all your saved content reports.</p>
+<div class="reports-page">
+  <div class="page-header">
+    <h1>Content Reports</h1>
+    <p>Here you will see all your saved content reports.</p>
 
-<%= link_to "Create new report", new_report_path %>
+    <%= link_to "Create New Report",
+                new_content_report_path,
+                class: "btn btn-primary" %>
+  </div>
+
+  <% if @content_reports.any? %>
+    <table class="table reports-table">
+      <thead>
+        <tr>
+          <th>Title</th>
+          <th>Status</th>
+          <th>Created</th>
+          <th>Actions</th>
+        </tr>
+      </thead>
+
+      <tbody>
+        <% @content_reports.each do |content_report| %>
+          <tr>
+            <td>
+              <%= link_to content_report.title,
+                          content_report_path(content_report) %>
+            </td>
+
+            <td>
+              <span class="status-badge">
+                <%= content_report.status.presence || "Draft" %>
+              </span>
+            </td>
+
+            <td>
+              <%= content_report.created_at.strftime("%b %d, %Y") %>
+            </td>
+
+            <td class="actions">
+              <%= link_to "View",
+                          content_report_path(content_report),
+                          class: "btn btn-sm" %>
+
+              <%= link_to "Edit",
+                          edit_content_report_path(content_report),
+                          class: "btn btn-sm btn-secondary" %>
+
+              <%= link_to "Delete",
+                          content_report_path(content_report),
+                          data: {
+                            turbo_method: :delete,
+                            turbo_confirm: "Are you sure?"
+                          },
+                          class: "btn btn-sm btn-danger" %>
+            </td>
+          </tr>
+        <% end %>
+      </tbody>
+    </table>
+  <% else %>
+    <div class="empty-state">
+      <p>No reports have been created yet.</p>
+
+      <%= link_to "Create your first report",
+                  new_content_report_path,
+                  class: "btn btn-primary" %>
+    </div>
+  <% end %>
+</div>

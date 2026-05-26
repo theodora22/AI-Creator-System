@@ -1,13 +1,10 @@
 class ContentReportsController < ApplicationController
-# app/controllers/reports_controller.rb
-
-def index
-  @reports = Report.order(created_at: :desc)
-  # vi
-end
+  def index
+    @content_reports = ContentReport.order(created_at: :desc)
+  end
 
   def show
-  @report = Report.find(params[:id])
+    @content_report = ContentReport.find(params[:id])
   end
 
   def new
