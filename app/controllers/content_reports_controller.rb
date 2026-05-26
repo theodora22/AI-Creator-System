@@ -3,6 +3,7 @@ class ContentReportsController < ApplicationController
 
 def index
   @reports = Report.order(created_at: :desc)
+  # vi
 end
 
   def show
