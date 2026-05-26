@@ -1,6 +1,9 @@
 class ContentReportsController < ApplicationController
-  def index
-  end
+# app/controllers/reports_controller.rb
+
+def index
+  @reports = Report.order(created_at: :desc)
+end
 
   def show
   end
