@@ -5,9 +5,12 @@
       <%= image_tag "logo.png", alt: "ContentFlow Logo", class: "h-6 w-auto" %>
     </div>
 
-    <div>
+    <div class="flex flex-col items-end space-y-1">
       <% if user_signed_in? %>
         <%= link_to "Log out", destroy_user_session_path, data: { turbo_method: :delete }, class: "bg-red-500 hover:bg-orange-600 text-white font-medium py-2 px-4 rounded-xl transition duration-200 text-xs shadow-sm cursor-pointer" %>
+        <span class="text-[9px] text-gray-400 font-bold uppercase tracking-wider">
+          <%= current_user.email %>
+        </span>
       <% end %>
     </div>
   </div>
@@ -17,9 +20,9 @@
 
       <% if user_signed_in? %>
         <h1 class="text-3xl font-bold text-gray-900">Welcome back!</h1>
-        <p class="text-sm text-green-600 bg-green-50 px-4 py-2 rounded-full font-medium inline-block">
-          Active Session: <%= current_user.email %>
-        </p>
+        <div class="mt-4">
+          <%= link_to "View Content Reports", content_reports_path, class: "bg-[#E25C37] hover:bg-[#c84e2e] text-white font-semibold py-3 px-6 rounded-xl transition duration-200 text-sm inline-block shadow-md hover:shadow-lg" %>
+        </div>
       <% else %>
         <div class="flex flex-col space-y-3 max-w-sm w-full mx-auto">
           <%= link_to "Log in", new_user_session_path, class: "w-full bg-[#E25C37] hover:bg-[#c84e2e] text-white font-medium py-3 px-6 rounded-xl transition duration-200 text-sm inline-block text-center shadow-sm" %>
