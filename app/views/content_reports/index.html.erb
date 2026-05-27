@@ -25,13 +25,13 @@
         <% @content_reports.each do |content_report| %>
           <tr>
             <td>
-              <%= link_to content_report.title,
+              <%= link_to content_report_title(content_report),
                           content_report_path(content_report) %>
             </td>
 
             <td>
               <span class="status-badge">
-                <%= content_report.status.presence || "Draft" %>
+                <%= content_report_status(content_report) %>
               </span>
             </td>
 
