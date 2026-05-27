@@ -3,3 +3,60 @@
   method: :post
 %>
 
+
+<div class="report-show-page">
+  <div class="page-header">
+    <h1><%= @content_report.title %></h1>
+
+    <div class="actions">
+      <%= link_to "Edit Report",
+                  edit_content_report_path(@content_report),
+                  class: "btn btn-secondary" %>
+
+      <%= link_to "Back to Reports",
+                  content_reports_path,
+                  class: "btn btn-light" %>
+
+      <%= link_to "Delete",
+                  content_report_path(@content_report),
+                  data: {
+                    turbo_method: :delete,
+                    turbo_confirm: "Are you sure you want to delete this report?"
+                  },
+                  class: "btn btn-danger" %>
+    </div>
+  </div>
+
+  <div class="report-details">
+    <div class="report-meta">
+      <p>
+        <strong>Status:</strong>
+        <%= @content_report.status.presence || "Draft" %>
+      </p>
+
+      <p>
+        <strong>Created:</strong>
+        <%= @content_report.created_at.strftime("%B %d, %Y at %I:%M %p") %>
+      </p>
+
+      <p>
+        <strong>Last Updated:</strong>
+        <%= @content_report.updated_at.strftime("%B %d, %Y at %I:%M %p") %>
+      </p>
+    </div>
+
+    <hr>
+
+    <div class="report-content">
+      <h2>Report Content</h2>
+
+      <% if @content_report.content.present? %>
+        <div class="content-body">
+          <%= simple_format(@content_report.content) %>
+        </div>
+      <% else %>
+        <p>No content has been added to this report yet.</p>
+      <% end %>
+    </div>
+  </div>
+</div>
