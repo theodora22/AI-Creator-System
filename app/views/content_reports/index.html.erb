@@ -21,62 +21,62 @@
   </div>
 
   <% if @content_reports.any? %>
-    <table class="table reports-table">
-      <thead>
+  <table class="table reports-table">
+    <thead>
+      <tr>
+        <th>Title</th>
+        <th>Platform</th>
+        <th>Created</th>
+        <th>Actions</th>
+      </tr>
+    </thead>
+
+    <tbody>
+      <% @content_reports.each do |content_report| %>
         <tr>
-          <th>Title</th>
-          <th>Platform</th>
-          <th>Created</th>
-          <th>Actions</th>
+          <td>
+            <%= link_to content_report.content_title,
+                        content_report_path(content_report) %>
+          </td>
+
+          <td>
+            <span class="status-badge">
+              <%= content_report.content_platform || "Draft" %>
+            </span>
+          </td>
+
+          <td>
+            <%= content_report.created_at.strftime("%b %d, %Y") %>
+          </td>
+
+          <td class="actions">
+            <%= link_to "View",
+                        content_report_path(content_report),
+                        class: "btn btn-sm" %>
+
+            <%= link_to "Edit",
+                        edit_content_report_path(content_report),
+                        class: "btn btn-sm btn-secondary" %>
+
+            <%= link_to "Delete",
+                        content_report_path(content_report),
+                        data: {
+                          turbo_method: :delete,
+                          turbo_confirm: "Are you sure?"
+                        },
+                        class: "btn btn-sm btn-danger" %>
+          </td>
         </tr>
-      </thead>
-
-      <tbody>
-        <% @content_reports.each do |content_report| %>
-          <tr>
-            <td>
-              <%= link_to content_report.content_title,
-                          content_report_path(content_report) %>
-            </td>
-
-            <td>
-              <span class="status-badge">
-                <%= content_report.content_platform || "Draft" %>
-              </span>
-            </td>
-
-            <td>
-              <%= content_report.created_at.strftime("%b %d, %Y") %>
-            </td>
-
-            <td class="actions">
-              <%= link_to "View",
-                          content_report_path(content_report),
-                          class: "btn btn-sm" %>
-
-              <%= link_to "Edit",
-                          edit_content_report_path(content_report),
-                          class: "btn btn-sm btn-secondary" %>
-
-              <%= link_to "Delete",
-                          content_report_path(content_report),
-                          data: {
-                            turbo_method: :delete,
-                            turbo_confirm: "Are you sure?"
-                          },
-                          class: "btn btn-sm btn-danger" %>
-            </td>
-          </tr>
-        <% end %>
       <% end %>
-    </div>
+    </tbody>
+  </table>
 
-  <% else %>
-    <div class="text-center py-24 border border-dashed border-[#E8DFD0] rounded-2xl">
-      <p class="text-gray-400 text-sm mb-4">No reports yet.</p>
-      <%= link_to "Create your first report", new_content_report_path,
-            class: "text-sm text-[#E25C37] font-medium hover:underline" %>
-    </div>
-  <% end %>
+<% else %>
+  <div class="text-center py-24 border border-dashed border-[#E8DFD0] rounded-2xl">
+    <p class="text-gray-400 text-sm mb-4">No reports yet.</p>
+    <%= link_to "Create your first report", new_content_report_path,
+          class: "text-sm text-[#E25C37] font-medium hover:underline" %>
+  </div>
+<% end %>
 
 </div>
