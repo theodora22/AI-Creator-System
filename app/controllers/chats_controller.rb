@@ -1,5 +1,6 @@
 class ChatsController < ApplicationController
   before_action :authenticate_user!
+  layout "chat", only: [:show]
 
   def create
     @content_report = ContentReport.find(params[:content_report_id])
