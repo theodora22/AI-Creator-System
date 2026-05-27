@@ -27,6 +27,6 @@ class ContentReportsController < ApplicationController
   private
 
   def content_report_params
-    params.require(:content_report).permit(:content_type, :content_hook, :content_lenght, :content_platform, :system_prompt)
+    params.require(:content_report).permit(:content_type, :content_hook, :content_length, :content_platform, :system_prompt)
   end
 end
