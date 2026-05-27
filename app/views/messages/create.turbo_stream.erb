@@ -1,0 +1,24 @@
+<% if @message.errors.any? %>
+  <%= turbo_stream.update "new_message_container" do %>
+    <%= render "messages/form", chat: @chat, message: @message %>
+  <% end %>
+<% else %>
+  <%= turbo_stream.remove "chat_empty_state" %>
+
+  <%= turbo_stream.append "messages" do %>
+    <%= render @message %>
+    <% if @assistant_message&.persisted? %>
+      <%= render @assistant_message %>
+    <% end %>
+  <% end %>
+
+  <%= turbo_stream.update "new_message_container" do %>
+    <%= render "messages/form", chat: @chat, message: Message.new %>
+  <% end %>
+
+  <% if @chat.title_previously_changed? %>
+    <%= turbo_stream.update "chat_title" do %>
+      <%= @chat.title %>
+    <% end %>
+  <% end %>
+<% end %>

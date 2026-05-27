@@ -1,0 +1,45 @@
+<div class="h-screen flex flex-col bg-gray-50 font-sans">
+  <!-- Header -->
+  <header class="flex-none bg-white border-b border-gray-100 px-6 py-4 flex items-center justify-between shadow-sm z-10">
+    <div class="flex items-center space-x-4">
+      <%= link_to content_report_path(@chat.content_report), class: "inline-flex items-center text-sm font-semibold text-gray-500 hover:text-[#E25C37] transition duration-150 ease-in-out" do %>
+        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-1" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7" />
+        </svg>
+        Back to Report
+      <% end %>
+      <div class="h-4 w-px bg-gray-200"></div>
+      <h1 id="chat_title" class="text-base md:text-lg font-bold text-gray-800 tracking-tight">
+        <%= @chat.title.presence || "New Strategy Chat" %>
+      </h1>
+    </div>
+
+    <div class="text-xs bg-orange-50 text-[#E25C37] px-3.5 py-1.5 rounded-full font-bold shadow-inner">
+      <%= @chat.content_report.content_platform %> • <%= @chat.content_report.content_type %>
+    </div>
+  </header>
+
+  <!-- Message History Container -->
+  <main class="flex-grow overflow-y-auto px-6 py-8 space-y-4 bg-gray-50/50" id="messages">
+    <% if @chat.messages.where.not(id: nil).empty? %>
+      <div id="chat_empty_state" class="h-full flex flex-col items-center justify-center text-center p-8">
+        <div class="p-4 bg-orange-50 text-[#E25C37] rounded-full mb-4 shadow-sm">
+          <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z" />
+          </svg>
+        </div>
+        <h3 class="text-base font-bold text-gray-800 mb-1">Start your Content Strategy Session</h3>
+        <p class="text-sm text-gray-400 max-w-sm font-medium">Ask your Strategy Assistant to generate alternative hooks, flesh out outlines, or edit copy length according to your Content Report guidelines.</p>
+      </div>
+    <% else %>
+      <%= render @chat.messages.where.not(id: nil).order(:created_at) %>
+    <% end %>
+  </main>
+
+  <!-- Fixed Bottom Form -->
+  <footer class="flex-none bg-white border-t border-gray-100 p-6 shadow-2xl z-10">
+    <div class="max-w-4xl mx-auto" id="new_message_container">
+      <%= render "messages/form", chat: @chat, message: @message %>
+    </div>
+  </footer>
+</div>
