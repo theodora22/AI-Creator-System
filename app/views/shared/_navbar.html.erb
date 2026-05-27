@@ -1,0 +1,15 @@
+<div class="w-full py-4 px-6 flex justify-between items-center bg-transparent">
+  <%= link_to root_path, class: "flex items-center" do %>
+    <%= image_tag "logo.png", alt: "ContentFlow Logo", class: "h-8" %>
+  <% end %>
+
+  <div class="flex items-center gap-4">
+    <% if user_signed_in? %>
+      <span class="text-sm text-gray-600"><%= current_user.email %></span>
+      <%= link_to "Log out", destroy_user_session_path, data: { turbo_method: :delete }, class: "text-sm text-red-500 hover:underline" %>
+    <% else %>
+      <%= link_to "Log in", new_user_session_path, class: "text-sm text-gray-700 hover:underline" %>
+      <%= link_to "Sign up", new_user_registration_path, class: "text-sm bg-orange-500 text-white px-3 py-1.5 rounded hover:bg-orange-600 transition" %>
+    <% end %>
+  </div>
+</div>

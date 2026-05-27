@@ -1,0 +1,53 @@
+<div class="w-full py-10 max-w-2xl mx-auto">
+
+<hr>
+
+<%= button_to "New chat", content_report_chats_path(@content_report), class: "btn btn-primary" %>
+
+<hr>
+
+<div class="report-show-page">
+  <div class="page-header">
+    <h1><%= @content_report.content_title %></h1>
+
+    <div class="actions">
+      <%= link_to "Edit Report",
+                  edit_content_report_path(@content_report),
+                  class: "btn btn-secondary" %>
+
+      <%= link_to "Back to Reports",
+                  content_reports_path,
+                  class: "btn btn-light" %>
+
+      <%= link_to "Delete",
+                  content_report_path(@content_report),
+                  data: {
+                    turbo_method: :delete,
+                    turbo_confirm: "Are you sure you want to delete this report?"
+                  },
+                  class: "btn btn-danger" %>
+    </div>
+  </div>
+
+  <div class="report-details">
+    <div class="report-meta">
+      <p>
+        <strong>Status:</strong>
+        <%= @content_report.content_platform || "Draft" %>
+      </p>
+
+      <p>
+        <strong>Created:</strong>
+        <%= @content_report.created_at.strftime("%B %d, %Y at %I:%M %p") %>
+      </p>
+
+  <% if @content_report.content_hook.present? %>
+    <div class="mb-6 border-l-2 border-[#E25C37] pl-4">
+      <p class="text-xs text-[#E25C37] font-medium uppercase tracking-wider mb-1">Hook</p>
+      <p class="text-sm text-[#1C1C1C] leading-relaxed"><%= @content_report.content_hook %></p>
+    </div>
+  <% end %>
+
+    <hr>
+  </div>
+</div>
