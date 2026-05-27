@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.1].define(version: 2026_05_26_114224) do
+ActiveRecord::Schema[8.1].define(version: 2026_05_27_090453) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_catalog.plpgsql"
 
@@ -26,7 +26,7 @@ ActiveRecord::Schema[8.1].define(version: 2026_05_26_114224) do
 
   create_table "content_reports", force: :cascade do |t|
     t.string "content_hook"
-    t.string "content_lenght"
+    t.string "content_length"
     t.string "content_platform"
     t.text "content_type"
     t.datetime "created_at", null: false
