@@ -8,7 +8,13 @@ Rails.application.routes.draw do
     resources :chats, only: [ :create ]
   end
 
+<<<<<<< HEAD
   resources :chats, only: [ :show ]
+=======
+  resources :chats, only: [:show] do
+    resources :messages, only: [:create]
+  end
+>>>>>>> 4da0e15591f69fd01bfcdfdd663f472a36e1c75a
 
   get "up" => "rails/health#show", as: :rails_health_check
 end

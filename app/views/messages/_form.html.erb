@@ -1,0 +1,33 @@
+<%= form_with(model: [chat, message], class: "w-full", data: { turbo: true }) do |f| %>
+  <% if message.errors.any? %>
+    <div class="mb-4 p-3.5 bg-red-50 border-l-4 border-red-500 rounded-r-lg text-sm text-red-700 shadow-sm animate-pulse">
+      <div class="flex items-center space-x-2">
+        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-red-500 flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z" />
+        </svg>
+        <span class="font-semibold"><%= message.errors.full_messages.to_sentence %></span>
+      </div>
+    </div>
+  <% end %>
+
+  <div class="flex gap-3 items-center">
+    <div class="relative flex-grow">
+      <%= f.text_field :content, 
+          placeholder: "Type your strategy question or prompt here...", 
+          class: "w-full pl-5 pr-12 py-3.5 bg-gray-50 hover:bg-gray-100/50 focus:bg-white border border-gray-200 focus:border-[#E25C37] focus:ring-2 focus:ring-[#E25C37]/20 rounded-xl shadow-inner focus:outline-none placeholder-gray-400 text-gray-700 font-medium transition-all duration-200 ease-in-out",
+          autocomplete: "off",
+          required: true %>
+      <div class="absolute right-4 top-1/2 -translate-y-1/2 text-gray-400">
+        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 11a7 7 0 01-7 7m0 0a7 7 0 01-7-7m7 7v4m0 0H8m4 0h4m-4-8a3 3 0 100-6 3 3 0 000 6z" />
+        </svg>
+      </div>
+    </div>
+
+    <%= f.button type: :submit, class: "flex items-center justify-center h-12 w-12 rounded-xl bg-[#E25C37] hover:bg-[#c94926] active:scale-95 text-white shadow-md hover:shadow-lg hover:shadow-orange-500/10 transition-all duration-150 ease-in-out cursor-pointer focus:outline-none focus:ring-2 focus:ring-[#E25C37] focus:ring-offset-2" do %>
+      <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 stroke-current" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M14 5l7 7m0 0l-7 7m7-7H3" />
+      </svg>
+    <% end %>
+  </div>
+<% end %>
