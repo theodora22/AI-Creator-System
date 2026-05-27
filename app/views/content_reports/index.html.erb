@@ -1,13 +1,23 @@
-<!-- app/views/content_reports/index.html.erb -->
+<%# Gradient background only on this page %>
+<div class="fixed inset-0 -z-10 pointer-events-none" style="background:
+  radial-gradient(ellipse at 70% 8%,  rgba(255, 195, 60,  0.18) 0%, transparent 42%),
+  radial-gradient(ellipse at 88% 30%, rgba(230, 120, 80,  0.12) 0%, transparent 38%),
+  radial-gradient(ellipse at 18% 42%, rgba(210, 75,  15,  0.13) 0%, transparent 46%),
+  radial-gradient(ellipse at 55% 68%, rgba(200, 85,  25,  0.09) 0%, transparent 50%),
+  radial-gradient(ellipse at 8%  88%, rgba(155, 45,  8,   0.15) 0%, transparent 44%),
+  radial-gradient(ellipse at 78% 92%, rgba(175, 65,  18,  0.10) 0%, transparent 40%);
+"></div>
 
-<div class="reports-page">
-  <div class="page-header">
-    <h1>Content Reports</h1>
-    <p>Here you will see all your saved content reports.</p>
+<div class="w-full py-10">
 
-    <%= link_to "Create New Report",
-                new_content_report_path,
-                class: "btn btn-primary" %>
+  <div class="mb-8">
+    <h1 style="font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif; font-weight: 800; font-size: 3.75rem; line-height: 1;" class="uppercase tracking-tight text-[#E25C37]">HERE ARE YOUR CONTENT REPORTS&nbsp;:)</h1>
+  </div>
+  <div class="flex justify-start mb-6">
+    <%= link_to new_content_report_path,
+          class: "bg-[#E25C37] hover:bg-[#c84e2e] text-white text-sm font-medium px-5 py-2.5 rounded-xl transition-colors duration-200" do %>
+      + New Report
+    <% end %>
   </div>
 
   <% if @content_reports.any? %>
@@ -58,15 +68,15 @@
             </td>
           </tr>
         <% end %>
-      </tbody>
-    </table>
-  <% else %>
-    <div class="empty-state">
-      <p>No reports have been created yet.</p>
+      <% end %>
+    </div>
 
-      <%= link_to "Create your first report",
-                  new_content_report_path,
-                  class: "btn btn-primary" %>
+  <% else %>
+    <div class="text-center py-24 border border-dashed border-[#E8DFD0] rounded-2xl">
+      <p class="text-gray-400 text-sm mb-4">No reports yet.</p>
+      <%= link_to "Create your first report", new_content_report_path,
+            class: "text-sm text-[#E25C37] font-medium hover:underline" %>
     </div>
   <% end %>
+
 </div>

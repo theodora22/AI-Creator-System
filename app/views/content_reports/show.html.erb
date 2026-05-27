@@ -1,4 +1,8 @@
-<%= button_to "New chat", content_report_chats_path(@content_report), class: "bg-blue-600 text-black px-6 py-3 rounded-md font-bold transition-colors hover:bg-blue-700" %>
+<div class="w-full py-10 max-w-2xl mx-auto">
+
+<hr>
+
+<%= button_to "New chat", content_report_chats_path(@content_report), class: "btn btn-primary" %>
 
 <hr>
 
@@ -37,11 +41,12 @@
         <%= @content_report.created_at.strftime("%B %d, %Y at %I:%M %p") %>
       </p>
 
-      <p>
-        <strong>Last Updated:</strong>
-        <%= @content_report.updated_at.strftime("%B %d, %Y at %I:%M %p") %>
-      </p>
+  <% if @content_report.content_hook.present? %>
+    <div class="mb-6 border-l-2 border-[#E25C37] pl-4">
+      <p class="text-xs text-[#E25C37] font-medium uppercase tracking-wider mb-1">Hook</p>
+      <p class="text-sm text-[#1C1C1C] leading-relaxed"><%= @content_report.content_hook %></p>
     </div>
+  <% end %>
 
     <hr>
   </div>
