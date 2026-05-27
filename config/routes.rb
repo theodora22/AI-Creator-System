@@ -5,10 +5,10 @@ Rails.application.routes.draw do
   resources :content_reports, path: "content-reports", only: [
     :index, :show, :new, :create, :edit, :update
   ] do
-    resources :chats, only: [:create]
+    resources :chats, only: [ :create ]
   end
 
-  resources :chats, only: [:show]
+  resources :chats, only: [ :show ]
 
   get "up" => "rails/health#show", as: :rails_health_check
 end

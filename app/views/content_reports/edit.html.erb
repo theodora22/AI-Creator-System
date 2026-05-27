@@ -1,4 +1,19 @@
-<div>
-  <h1 class="font-bold text-4xl">Reports#edit</h1>
-  <p>Find me in app/views/reports/edit.html.erb</p>
-</div>
+<h1 class="font-bold text-4xl">Edit Content Report</h1>
+
+<%= form_with(model: @content_report, local: true) do |form| %>
+
+  <div>
+    <%= form.label :agent_answer, "Agent Answer" %><br>
+    <%= form.text_area :agent_answer, rows: 8 %>
+  </div>
+
+  <div>
+    <%= form.label :refined_answer, "Refined Answer" %><br>
+    <%= form.text_area :refined_answer, rows: 8 %>
+  </div>
+
+  <div>
+    <%= form.submit "Save Changes" %>
+  </div>
+
+<% end %>
