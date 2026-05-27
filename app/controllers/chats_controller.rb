@@ -4,12 +4,16 @@ class ChatsController < ApplicationController
   def create
     @content_report = ContentReport.find(params[:content_report_id])
 
-    @chat = Chat.create!(
-      user: current_user,
-      content_report: @content_report
-    )
+    @chat = Chat.new(title: Chat::DEFAULT_TITLE)
+    @chat.content_report = @content_report
+    @chat.user = current_user
 
-    redirect_to chat_path(@chat)
+    if @chat.save
+      redirect_to chat_path(@chat)
+    else
+      @chats = @content_report.chats.where(user: current_user)
+      render "content-reports/show"
+    end
   end
 
   def show
