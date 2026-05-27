@@ -15,7 +15,7 @@
       <thead>
         <tr>
           <th>Title</th>
-          <th>Status</th>
+          <th>Platform</th>
           <th>Created</th>
           <th>Actions</th>
         </tr>
@@ -25,13 +25,13 @@
         <% @content_reports.each do |content_report| %>
           <tr>
             <td>
-              <%= link_to content_report.title,
+              <%= link_to content_report.content_title,
                           content_report_path(content_report) %>
             </td>
 
             <td>
               <span class="status-badge">
-                <%= content_report.status.presence || "Draft" %>
+                <%= content_report.content_platform || "Draft" %>
               </span>
             </td>
 

@@ -6,7 +6,7 @@
 
 <div class="report-show-page">
   <div class="page-header">
-    <h1><%= @content_report.title %></h1>
+    <h1><%= @content_report.content_title %></h1>
 
     <div class="actions">
       <%= link_to "Edit Report",
@@ -31,7 +31,7 @@
     <div class="report-meta">
       <p>
         <strong>Status:</strong>
-        <%= @content_report.status.presence || "Draft" %>
+        <%= @content_report.content_platform || "Draft" %>
       </p>
 
       <p>
@@ -46,17 +46,5 @@
     </div>
 
     <hr>
-
-    <div class="report-content">
-      <h2>Report Content</h2>
-
-      <% if @content_report.content.present? %>
-        <div class="content-body">
-          <%= simple_format(@content_report.content) %>
-        </div>
-      <% else %>
-        <p>No content has been added to this report yet.</p>
-      <% end %>
-    </div>
   </div>
 </div>
