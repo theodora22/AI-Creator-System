@@ -25,9 +25,10 @@ class ContentReportsController < ApplicationController
 
   def update
     if @content_report.update(content_report_params)
-      redirect_to @content_report, notice: "Content report updated successfully."
+      redirect_to @content_report,
+        notice: "Content report updated successfully."
     else
-      render :edit
+      render :edit, status: :unprocessable_entity
     end
   end
 

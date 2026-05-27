@@ -25,14 +25,12 @@ ActiveRecord::Schema[8.1].define(version: 2026_05_27_104143) do
   end
 
   create_table "content_reports", force: :cascade do |t|
-    t.text "agent_answer"
     t.string "content_hook"
     t.string "content_length"
     t.string "content_platform"
     t.string "content_title"
     t.text "content_type"
     t.datetime "created_at", null: false
-    t.text "refined_answer"
     t.text "system_prompt"
     t.datetime "updated_at", null: false
   end
