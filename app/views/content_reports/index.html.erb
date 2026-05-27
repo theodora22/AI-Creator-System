@@ -21,40 +21,52 @@
   </div>
 
   <% if @content_reports.any? %>
-    <div class="grid gap-3">
-      <% @content_reports.each do |report| %>
-        <%= link_to content_report_path(report),
-              class: "group block bg-white border border-[#E8DFD0] rounded-2xl p-5 hover:border-[#E25C37] hover:shadow-sm transition-all duration-200" do %>
-          <div class="flex justify-between items-start gap-4">
-            <div class="flex-1 min-w-0">
-              <h2 class="font-medium text-[#1C1C1C] truncate group-hover:text-[#E25C37] transition-colors">
-                <%= report.content_title.presence || "Untitled" %>
-              </h2>
-              <% if report.content_hook.present? %>
-                <p class="text-xs text-gray-500 mt-1 truncate italic">"<%= report.content_hook %>"</p>
-              <% end %>
-              <div class="flex flex-wrap gap-2 mt-2.5">
-                <% if report.content_type.present? %>
-                  <span class="text-xs bg-[#FFF3EE] text-[#E25C37] px-2.5 py-0.5 rounded-full font-medium">
-                    <%= report.content_type %>
-                  </span>
-                <% end %>
-                <% if report.content_platform.present? %>
-                  <span class="text-xs bg-[#F5EDD8] text-[#8B6914] px-2.5 py-0.5 rounded-full font-medium">
-                    <%= report.content_platform %>
-                  </span>
-                <% end %>
-                <% if report.content_length.present? %>
-                  <span class="text-xs bg-[#F3F4F6] text-gray-500 px-2.5 py-0.5 rounded-full">
-                    <%= report.content_length %>
-                  </span>
-                <% end %>
-              </div>
-            </div>
-            <span class="text-xs text-gray-400 whitespace-nowrap mt-0.5">
-              <%= report.created_at.strftime("%b %d, %Y") %>
-            </span>
-          </div>
+    <table class="table reports-table">
+      <thead>
+        <tr>
+          <th>Title</th>
+          <th>Platform</th>
+          <th>Created</th>
+          <th>Actions</th>
+        </tr>
+      </thead>
+
+      <tbody>
+        <% @content_reports.each do |content_report| %>
+          <tr>
+            <td>
+              <%= link_to content_report.content_title,
+                          content_report_path(content_report) %>
+            </td>
+
+            <td>
+              <span class="status-badge">
+                <%= content_report.content_platform || "Draft" %>
+              </span>
+            </td>
+
+            <td>
+              <%= content_report.created_at.strftime("%b %d, %Y") %>
+            </td>
+
+            <td class="actions">
+              <%= link_to "View",
+                          content_report_path(content_report),
+                          class: "btn btn-sm" %>
+
+              <%= link_to "Edit",
+                          edit_content_report_path(content_report),
+                          class: "btn btn-sm btn-secondary" %>
+
+              <%= link_to "Delete",
+                          content_report_path(content_report),
+                          data: {
+                            turbo_method: :delete,
+                            turbo_confirm: "Are you sure?"
+                          },
+                          class: "btn btn-sm btn-danger" %>
+            </td>
+          </tr>
         <% end %>
       <% end %>
     </div>
