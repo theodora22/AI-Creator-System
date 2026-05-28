@@ -1,4 +1,5 @@
-<div class="fixed inset-0 bg-[#FFFDF6] flex flex-col justify-between p-12 box-border overflow-hidden font-sans">
+<div class="fixed inset-0 bg-[#FFFDF6] flex flex-col justify-between p-12 box-border overflow-y-auto font-sans">
+
 
   <div class="flex justify-between items-start w-full">
 
@@ -30,21 +31,45 @@
 
     <div class="flex flex-col items-center md:items-end justify-end mr-4 md:mr-12 mb-2">
       <% if user_signed_in? %>
-        <div class="flex flex-col items-center">
-          <svg xmlns="http://www.w3.org/2000/svg" class="h-56 w-56 text-black stroke-current mb-2" fill="none" viewBox="0 0 24 24"
-    stroke-width="3" stroke-linecap="round" stroke-linejoin="round">
-            <line x1="12" y1="4" x2="12" y2="20" />
-            <polyline points="5 13 12 20 19 13" />
+        <div class="group flex flex-col items-center">
+          <svg xmlns="http://www.w3.org/2000/svg" class="h-56 w-56 mb-2" viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round">
+            <defs>
+              <clipPath id="arrow-clip-signed-in">
+                <rect x="0" y="0" width="24" height="24" class="arrow-mask-rect" />
+              </clipPath>
+            </defs>
+            <!-- Base Arrow (Black) -->
+            <g stroke="black" stroke-width="3" fill="none">
+              <line x1="12" y1="4" x2="12" y2="20" />
+              <polyline points="5 13 12 20 19 13" />
+            </g>
+            <!-- Filled Arrow (Orange) -->
+            <g stroke="#FF5733" stroke-width="3" fill="none" clip-path="url(#arrow-clip-signed-in)">
+              <line x1="12" y1="4" x2="12" y2="20" />
+              <polyline points="5 13 12 20 19 13" />
+            </g>
           </svg>
 
-          <%= link_to "View Content Reports", content_reports_path, class: "text-xl md:text-2xl font-bold text-black hover:text-[#FF5733] underline decoration-black hover:decoration-[#FF5733] underline-offset-8 transition duration-200 cursor-pointer text-center" %>
+          <%= link_to "view content reports", content_reports_path, class: "text-xl md:text-2xl font-bold text-black hover:text-[#FF5733] underline decoration-black hover:decoration-[#FF5733] underline-offset-8 transition duration-200 cursor-pointer text-center" %>
         </div>
       <% else %>
-        <div class="flex flex-col items-center">
-          <svg xmlns="http://www.w3.org/2000/svg" class="h-56 w-56 text-black stroke-current mb-2" fill="none" viewBox="0 0 24 24"
-    stroke-width="3" stroke-linecap="round" stroke-linejoin="round">
-            <line x1="12" y1="4" x2="12" y2="20" />
-            <polyline points="5 13 12 20 19 13" />
+        <div class="group flex flex-col items-center">
+          <svg xmlns="http://www.w3.org/2000/svg" class="h-56 w-56 mb-2" viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round">
+            <defs>
+              <clipPath id="arrow-clip-signed-out">
+                <rect x="0" y="0" width="24" height="24" class="arrow-mask-rect" />
+              </clipPath>
+            </defs>
+            <!-- Base Arrow (Black) -->
+            <g stroke="black" stroke-width="3" fill="none">
+              <line x1="12" y1="4" x2="12" y2="20" />
+              <polyline points="5 13 12 20 19 13" />
+            </g>
+            <!-- Filled Arrow (Orange) -->
+            <g stroke="#FF5733" stroke-width="3" fill="none" clip-path="url(#arrow-clip-signed-out)">
+              <line x1="12" y1="4" x2="12" y2="20" />
+              <polyline points="5 13 12 20 19 13" />
+            </g>
           </svg>
 
           <div class="flex flex-col items-center space-y-3">

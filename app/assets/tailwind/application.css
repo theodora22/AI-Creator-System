@@ -1,1 +1,57 @@
 @import "tailwindcss";
+
+/* -------------------------------------------------------------------------
+   Custom Rounded-End Underlines
+   Redefines standard underlines across the app to use rounded pseudo-elements.
+   ------------------------------------------------------------------------- */
+.underline, .hover\:underline {
+  position: relative;
+  text-decoration: none !important;
+}
+
+.underline::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: var(--underline-offset, -2px);
+  height: var(--underline-thickness, 2.5px);
+  background-color: currentColor;
+  border-radius: 9999px;
+}
+
+.hover\:underline::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: var(--underline-offset, -2px);
+  height: var(--underline-thickness, 2.5px);
+  background-color: currentColor;
+  border-radius: 9999px;
+  opacity: 0;
+  transition: opacity 0.2s ease, background-color 0.2s ease;
+}
+
+.hover\:underline:hover::after {
+  opacity: 1;
+}
+
+/* Map standard Tailwind underline offsets to our custom variables */
+.underline-offset-1 { --underline-offset: -1px; }
+.underline-offset-2 { --underline-offset: -2px; }
+.underline-offset-4 { --underline-offset: -4px; }
+.underline-offset-8 { --underline-offset: -8px; }
+
+/* -------------------------------------------------------------------------
+   SVG Mask Transitions (Arrow & Plus)
+   Controls the premium 1.0s top-to-bottom hover fill animation.
+   ------------------------------------------------------------------------- */
+.arrow-mask-rect {
+  height: 0px;
+  transition: height 1.0s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.group:hover .arrow-mask-rect {
+  height: 24px;
+}
