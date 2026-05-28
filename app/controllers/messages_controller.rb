@@ -10,7 +10,7 @@ class MessagesController < ApplicationController
       begin
         build_conversation_history
         ai_response = @ruby_llm_chat.ask(@message.content)
-        
+
         @assistant_message = @chat.messages.build(
           role: "assistant",
           content: ai_response.content
@@ -65,10 +65,9 @@ class MessagesController < ApplicationController
 
     @ruby_llm_chat.add_message(role: :system, content: system_prompt.join("\n\n"))
 
-    # Loop through past messages (excluding the new one being sent now)
     past_messages = @chat.messages.where.not(id: nil)
     past_messages = past_messages.where.not(id: @message.id) if @message.persisted?
-    
+
     past_messages.order(:created_at).each do |msg|
       @ruby_llm_chat.add_message(role: msg.role.to_sym, content: msg.content)
     end
