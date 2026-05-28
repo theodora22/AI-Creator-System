@@ -8,6 +8,7 @@
 #     MovieGenre.find_or_create_by!(name: genre_name)
 #   end
 
+Chat.destroy_all
 ContentReport.destroy_all
 
 content_reports_data = [
