@@ -16,10 +16,6 @@ class MessagesController < ApplicationController
           content: ai_response.content
         )
         @assistant_message.save!
-        
-        if @chat.title.blank?
-          @chat.update(title: @message.content.truncate(30))
-        end
       rescue => e
         logger.error "AI Strategy Chat Error: #{e.message}"
         @assistant_message = @chat.messages.build(

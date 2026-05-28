@@ -5,6 +5,7 @@ class ContentReportsController < ApplicationController
 
   def show
     @content_report = ContentReport.find(params[:id])
+    @chats = @content_report.chats.where(user: current_user).order(created_at: :desc)
   end
 
   def new
