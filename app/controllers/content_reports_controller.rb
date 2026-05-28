@@ -2,7 +2,7 @@ class ContentReportsController < ApplicationController
   before_action :set_content_report, only: [ :show, :edit, :update, :destroy ]
 
   CREATE_PROMPT = <<-PROMPT
-    placeholder please replace
+    "Dear LLM, your are helping a content creator to create a content report based on a Ruby LLM schema provided to you. Your tasks is to create a customized content report based on the user input and the schema."
   PROMPT
 
   def index

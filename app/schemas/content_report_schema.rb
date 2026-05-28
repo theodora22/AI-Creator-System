@@ -1,10 +1,10 @@
 class ContentReportSchema < RubyLLM::Schema
-    string :agent_answer, description: ""
-    string :content_hook, description: ""
-    string :content_length, description: ""
-    string :content_platform, description: ""
-    string :content_title, description: ""
-    string :content_type, description: ""
-    string :refined_answer, description: ""
-    string :system_prompt, description: ""
+    string :agent_answer, description: "Check for current best practices to create content that will perform well on a given channel and audience. Then tailor the output to the Content Report schema."
+    string :content_hook, description: "The catch phrase and first sentence of the content piece to be created. It has to capture the audience's attention."
+    string :content_length, description: "Specify the optimal length of the content piece to be created according to best practices for the Content Type."
+    string :content_platform, description: "Specify the platform/channel the content piece will be created for."
+    string :content_title, description: "The title of the content piece to be created. Make it short and snappy."
+    string :content_type, description: "Specify the content type for the content piece to be created. E.g. a blog post, newsletter, social media post etc."
+    string :refined_answer, description: "A user input for a refined answer based on the agent answer."
+    string :system_prompt, description: "Dear LLM, your are helping a content creator to create a content report based on a Ruby LLM schema provided to you. Your tasks is to create a customized content report based on the user input and the schema."
 end
