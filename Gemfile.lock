@@ -401,6 +401,7 @@ DEPENDENCIES
   debug
   devise
   dotenv-rails
+  httplog
   image_processing (~> 2.0)
   importmap-rails
   pg (~> 1.1)
