@@ -1,4 +1,4 @@
-class CreateContentReport < RubyLLM::Tool
+class CreateContentReportTool < RubyLLM::Tool
 description "Create a new content report"
 
 param :content_title,
