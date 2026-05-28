@@ -11,8 +11,11 @@
 <div class="w-full py-10">
 
   <div class="mb-8">
-    <h1 style="font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif; font-weight: 800; font-size: 3.75rem; line-height: 1;" class="uppercase tracking-tight text-[#E25C37]">HERE ARE YOUR CONTENT REPORTS&nbsp;:)</h1>
+    <h1 style="font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif; font-weight: 800; font-size: 3.75rem; line-height: 1;" class="uppercase tracking-tight text-[#E25C37]">
+      HERE ARE YOUR CONTENT REPORTS&nbsp;:)
+    </h1>
   </div>
+
   <div class="flex justify-start mb-6">
     <%= link_to new_content_report_path,
           class: "bg-[#E25C37] hover:bg-[#c84e2e] text-white text-sm font-medium px-5 py-2.5 rounded-xl transition-colors duration-200" do %>
@@ -21,62 +24,65 @@
   </div>
 
   <% if @content_reports.any? %>
-  <table class="table reports-table">
-    <thead>
-      <tr>
-        <th>Title</th>
-        <th>Platform</th>
-        <th>Created</th>
-        <th>Actions</th>
-      </tr>
-    </thead>
-
-    <tbody>
-      <% @content_reports.each do |content_report| %>
-        <tr>
-          <td>
-            <%= link_to content_report.content_title,
-                        content_report_path(content_report) %>
-          </td>
-
-          <td>
-            <span class="status-badge">
-              <%= content_report.content_platform || "Draft" %>
-            </span>
-          </td>
-
-          <td>
-            <%= content_report.created_at.strftime("%b %d, %Y") %>
-          </td>
-
-          <td class="actions">
-            <%= link_to "View",
-                        content_report_path(content_report),
-                        class: "btn btn-sm" %>
-
-            <%= link_to "Edit",
-                        edit_content_report_path(content_report),
-                        class: "btn btn-sm btn-secondary" %>
-
-            <%= link_to "Delete",
-                        content_report_path(content_report),
-                        data: {
-                          turbo_method: :delete,
-                          turbo_confirm: "Are you sure?"
-                        },
-                        class: "btn btn-sm btn-danger" %>
-          </td>
+    <table class="w-full text-sm text-left">
+      <thead>
+        <tr class="border-b border-gray-200 text-xs uppercase tracking-wider text-gray-400">
+          <th class="pb-3 font-medium">Title</th>
+          <th class="pb-3 font-medium">Platform</th>
+          <th class="pb-3 font-medium">Created</th>
+          <th class="pb-3 font-medium"></th>
         </tr>
-      <% end %>
-    </tbody>
-  </table>
+      </thead>
 
-<% else %>
-  <div class="text-center py-24 border border-dashed border-[#E8DFD0] rounded-2xl">
-    <p class="text-gray-400 text-sm mb-4">No reports yet.</p>
-    <%= link_to "Create your first report", new_content_report_path,
-          class: "text-sm text-[#E25C37] font-medium hover:underline" %>
-  </div>
-<% end %>
+      <tbody>
+        <% @content_reports.each do |content_report| %>
+          <tr class="border-b border-gray-100 hover:bg-gray-50/50">
+            <td class="py-4 font-medium text-[#1C1C1C]">
+              <%= link_to content_report.content_title.presence || "Untitled Report",
+                    content_report_path(content_report),
+                    class: "hover:text-[#E25C37] transition-colors" %>
+            </td>
+
+            <td class="py-4">
+              <span class="text-xs font-medium px-2 py-1 rounded-full bg-orange-50 text-[#E25C37]">
+                <%= content_report.content_platform.presence || "Draft" %>
+              </span>
+            </td>
+
+            <td class="py-4 text-gray-400">
+              <%= content_report.created_at.strftime("%b %d, %Y") %>
+            </td>
+
+            <td class="py-4 text-right space-x-4">
+              <%= link_to "View",
+                    content_report_path(content_report),
+                    class: "text-sm text-gray-600 hover:text-[#E25C37] transition-colors" %>
+
+              <%= link_to "Edit",
+                    edit_content_report_path(content_report),
+                    class: "text-sm text-gray-600 hover:text-[#E25C37] transition-colors" %>
+
+              <%= link_to "Delete",
+                    content_report_path(content_report),
+                    data: {
+                      turbo_method: :delete,
+                      turbo_confirm: "Are you sure?"
+                    },
+                    class: "text-sm text-red-500 hover:underline" %>
+            </td>
+          </tr>
+        <% end %>
+      </tbody>
+    </table>
+
+  <% else %>
+    <div class="text-center py-24 border border-dashed border-[#E8DFD0] rounded-2xl">
+      <p class="text-gray-400 text-sm mb-4">No reports yet.</p>
+
+      <%= link_to "Create your first report",
+            new_content_report_path,
+            class: "text-sm text-[#E25C37] font-medium hover:underline" %>
+    </div>
+  <% end %>
 
 </div>

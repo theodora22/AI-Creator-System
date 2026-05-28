@@ -23,10 +23,25 @@ class ContentReportsController < ApplicationController
   def edit
   end
 
-  def update
-  end
+
+ def update
+      if @content_report.update(content_report_params)
+        redirect_to @content_report, notice: "Content report was successfully updated."
+      else
+        render :edit, status: :unprocessable_entity
+      end
+ end
+
+ def destroy
+      @content_report.destroy
+      redirect_to content_reports_path, notice: "Content report was deleted."
+ end
 
   private
+
+  def set_content_report
+        @content_report = ContentReport.find(params[:id])
+  end
 
   def content_report_params
     params.require(:content_report).permit(:content_title, :content_type, :content_hook, :content_length, :content_platform, :system_prompt)
