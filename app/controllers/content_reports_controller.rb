@@ -1,6 +1,10 @@
 class ContentReportsController < ApplicationController
   before_action :set_content_report, only: [ :show, :edit, :update, :destroy ]
 
+  CREATE_PROMPT = <<-PROMPT
+    placeholder please replace
+  PROMPT
+
   def index
     @content_reports = ContentReport.order(created_at: :desc)
   end
@@ -14,7 +18,11 @@ class ContentReportsController < ApplicationController
   end
 
   def create
-    @content_report = ContentReport.new(content_report_params)
+    user_prompt = helpers.sanitize(params[:content])
+    chat = RubyLLM.chat
+    response = chat.with_schema(ContentReportSchema).ask("#{CREATE_PROMPT}, please create a content report based on #{user_prompt}")
+
+    @content_report = ContentReport.new(response.content)
     if @content_report.save
       redirect_to @content_report, notice: "Content report was successfully created."
     else
