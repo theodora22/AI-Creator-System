@@ -16,10 +16,6 @@ class MessagesController < ApplicationController
           content: ai_response.content
         )
         @assistant_message.save!
-
-        if @chat.title.blank?
-          @chat.update(title: @message.content.truncate(30))
-        end
       rescue => e
         logger.error "AI Strategy Chat Error: #{e.message}"
         @assistant_message = @chat.messages.build(
@@ -60,7 +56,7 @@ class MessagesController < ApplicationController
       "- Platform: #{@chat.content_report.content_platform}",
       "- Content Type: #{@chat.content_report.content_type}",
       "- Hook: #{@chat.content_report.content_hook}",
-      "- Length: #{@chat.content_report.content_lenght}"
+      "- Length: #{@chat.content_report.content_length}"
     ]
 
     if @chat.content_report.system_prompt.present?

@@ -6,11 +6,19 @@ class Message < ApplicationRecord
   validates :content, presence: true
   validate :user_message_limit, if: -> { role == "user" }, on: :create
 
+  after_create :update_chat_title
+
   private
 
   def user_message_limit
     if chat.messages.where(role: "user").count >= MAX_USER_MESSAGES
       errors.add(:content, "You can only send #{MAX_USER_MESSAGES} messages per chat.")
+    end
+  end
+
+  def update_chat_title
+    if role == "user" && (chat.title.blank? || chat.title == Chat::DEFAULT_TITLE)
+      chat.update(title: content.truncate(30))
     end
   end
 end
