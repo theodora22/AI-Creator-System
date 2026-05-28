@@ -22,7 +22,8 @@ class ContentReportsController < ApplicationController
     chat = RubyLLM.chat
     response = chat.with_schema(ContentReportSchema).ask("#{CREATE_PROMPT}, please create a content report based on #{user_prompt}")
 
-    @content_report = ContentReport.new(response.content)
+    report_attrs = response.content.slice("content_title", "content_type", "content_hook", "content_length", "content_platform", "system_prompt")
+    @content_report = ContentReport.new(report_attrs)
     if @content_report.save
       redirect_to @content_report, notice: "Content report was successfully created."
     else
