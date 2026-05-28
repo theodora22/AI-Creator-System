@@ -60,7 +60,7 @@ class MessagesController < ApplicationController
       "- Platform: #{@chat.content_report.content_platform}",
       "- Content Type: #{@chat.content_report.content_type}",
       "- Hook: #{@chat.content_report.content_hook}",
-      "- Length: #{@chat.content_report.content_lenght}"
+      "- Length: #{@chat.content_report.content_length}"
     ]
 
     if @chat.content_report.system_prompt.present?
