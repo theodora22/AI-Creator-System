@@ -6,18 +6,38 @@
                 <%= message.role == 'user' ? 'bg-[#E25C37] text-white rounded-2xl rounded-tr-none shadow-orange-500/5' : 'bg-white border border-gray-100 text-gray-800 rounded-2xl rounded-tl-none shadow-gray-200/50' %>">
       
       <!-- Sender Label -->
-      <div class="text-[10px] font-bold tracking-wider uppercase mb-1.5 opacity-80 flex items-center gap-1
+      <div class="text-[10px] font-bold tracking-wider uppercase mb-1.5 opacity-80 flex items-center justify-between gap-2
                   <%= message.role == 'user' ? 'text-orange-100' : 'text-gray-400' %>">
-        <% if message.role == 'user' %>
-          <svg xmlns="http://www.w3.org/2000/svg" class="h-3 w-3" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
-          </svg>
-          You
-        <% else %>
-          <svg xmlns="http://www.w3.org/2000/svg" class="h-3 w-3" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z" />
-          </svg>
-          Strategist AI
+        <div class="flex items-center gap-1">
+          <% if message.role == 'user' %>
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-3 w-3" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
+            </svg>
+            You
+          <% else %>
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-3 w-3" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z" />
+            </svg>
+            Strategist AI
+          <% end %>
+        </div>
+
+        <% unless message.role == 'user' %>
+          <%= link_to new_content_report_path(
+                content_title: "Report from Chat: #{message.chat.title.presence || 'Untitled'}",
+                content_platform: message.chat.content_report.content_platform,
+                content_type: message.chat.content_report.content_type,
+                content_hook: message.content,
+                content_length: message.chat.content_report.content_length,
+                system_prompt: message.chat.content_report.system_prompt
+              ),
+              class: "text-[10px] font-bold text-[#E25C37] hover:text-[#c84e2e] hover:underline flex items-center gap-1 transition-colors duration-150 ease-in-out normal-case",
+              title: "Save this answer as a new Content Report" do %>
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-3.5 w-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7H5a2 2 0 00-2 2v9a2 2 0 002 2h14a2 2 0 002-2V9a2 2 0 00-2-2h-3m-1 4l-3 3m0 0l-3-3m3 3V4" />
+            </svg>
+            Save to New Report
+          <% end %>
         <% end %>
       </div>
 
