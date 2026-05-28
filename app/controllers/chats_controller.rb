@@ -12,12 +12,19 @@ class ChatsController < ApplicationController
       redirect_to chat_path(@chat)
     else
       @chats = @content_report.chats.where(user: current_user)
-      render "content-reports/show"
+      render "content_reports/show", status: :unprocessable_entity
     end
   end
 
   def show
     @chat = current_user.chats.find(params[:id])
     @message = Message.new
+  end
+
+  def destroy
+    @chat = current_user.chats.find(params[:id])
+    @content_report = @chat.content_report
+    @chat.destroy
+    redirect_to content_report_path(@content_report), notice: "Chat was successfully deleted."
   end
 end

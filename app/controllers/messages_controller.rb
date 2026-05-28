@@ -17,7 +17,7 @@ class MessagesController < ApplicationController
         )
         @assistant_message.save!
         
-        if @chat.title.blank?
+        if @chat.title.blank? || @chat.title == Chat::DEFAULT_TITLE
           @chat.update(title: @message.content.truncate(30))
         end
       rescue => e
