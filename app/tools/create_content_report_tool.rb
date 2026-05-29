@@ -33,7 +33,7 @@ content_length:,
 content_platform:,
 system_prompt:
 )
-content_report = ContentReport.create!(
+@content_report = ContentReport.create!(
 content_title: content_title,
 content_type: content_type,
 content_hook: content_hook,
