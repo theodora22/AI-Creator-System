@@ -18,6 +18,8 @@ gem "stimulus-rails"
 gem "tailwindcss-rails"
 
 gem "ruby_llm"
+gem "ruby_llm-schema"
+
 
 gem "dotenv-rails", groups: [:development, :test]
 
