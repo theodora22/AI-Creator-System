@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.1].define(version: 2026_05_28_112659) do
+ActiveRecord::Schema[8.1].define(version: 2026_05_29_100210) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_catalog.plpgsql"
 
@@ -58,6 +58,7 @@ ActiveRecord::Schema[8.1].define(version: 2026_05_28_112659) do
     t.string "content_hook"
     t.string "content_length"
     t.string "content_platform"
+    t.text "content_script"
     t.string "content_title"
     t.text "content_type"
     t.datetime "created_at", null: false
