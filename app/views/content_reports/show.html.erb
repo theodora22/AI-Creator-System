@@ -77,11 +77,11 @@
         </div>
       <% end %>
 
-      <% if @content_report.system_prompt.present? %>
+      <% if @content_report.content_script.present? %>
         <div class="max-w-3xl select-none flex flex-col" style="margin-left: 36px; margin-bottom: 10px;">
-          <p class="text-xl font-semibold text-black lowercase" style="line-height: 1.1; margin-bottom: 0px;">system prompt</p>
+          <p class="text-xl font-semibold text-black lowercase" style="line-height: 1.1; margin-bottom: 0px;">script</p>
           <p class="text-base md:text-lg font-medium text-gray-500 leading-relaxed lowercase" style="line-height: 1.4; margin-top: 0;">
-            <%= @content_report.system_prompt %>
+            <%= @content_report.content_script %>
           </p>
         </div>
       <% end %>
