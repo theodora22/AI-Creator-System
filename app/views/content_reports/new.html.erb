@@ -1,13 +1,95 @@
-<div class="min-h-screen bg-[#FFFDF3]">
-  <div class="w-full max-w-2xl mx-auto px-6 py-12">
+<div id="page-container" class="fixed inset-0 bg-[#FFFDF6] flex flex-col justify-between pt-12 pb-12 pr-12 pl-6 md:pl-0 box-border overflow-y-auto font-sans">
 
-    <div class="mb-8">
-      <%= link_to "← Back", content_reports_path, class: "text-sm text-[#9A9488] hover:text-[#E25C37] transition-colors" %>
+  <!-- 1. TOP HEADER BEREICH -->
+  <div class="flex justify-between items-start w-full select-none z-50">
+    <div class="flex items-center select-none -mt-6 md:ml-6">
+      <%= link_to root_path do %>
+        <%= image_tag "logo.png", alt: "ContentFlow Logo", class: "h-9 w-auto object-contain hover:opacity-80 transition-opacity" %>
+      <% end %>
     </div>
 
-    <h1 style="font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif; font-weight: 500;" class="text-3xl uppercase tracking-tight text-[#E25C37] mb-8">
-      New Report
-    </h1>
-  <%= render "content_reports/llm_input" %>
+    <!-- Rechte Header-Navigation -->
+    <div class="flex items-center space-x-6 select-none font-semibold -mt-6">
+      <%= link_to "← back", content_reports_path, class: "text-sm text-gray-400 hover:text-[#FF5733] transition-colors" %>
+      <% if user_signed_in? %>
+        <span class="text-[9px] text-gray-400 font-semibold uppercase tracking-wider hidden md:inline">
+          <%= current_user.email %>
+        </span>
+      <% end %>
+    </div>
   </div>
+
+  <!-- 2. HAUPTINHALT -->
+  <div class="flex-1 flex flex-col justify-between items-stretch w-full pt-8 pb-4">
+
+    <!-- Slogan -->
+    <div class="w-full font-medium text-[#FF5733] leading-[0.76] tracking-tighter uppercase select-none flex flex-col items-start text-left justify-start pt-6 md:pt-10 ml-6 max-w-7xl lg:max-w-[90vw] transition-morph" style="font-size: var(--title-font-size);">
+      <span class="block">LET</span>
+      <span class="block">YOUR CREATIVE</span>
+      <span class="block">THOUGHTS</span>
+      <span class="block">FLOW</span>
+    </div>
+
+    <!-- Zentrierte Action-Gruppe unten -->
+    <div class="w-full flex flex-col items-center justify-end mt-16 select-none">
+
+      <!-- Der perfekt proportionierte Pfeil (w-8 h-8 entspricht genau 32px) -->
+      <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="3" stroke="currentColor" class="w-8 h-8 text-black mb-4 custom-bounce">
+        <path stroke-linecap="round" stroke-linejoin="round" d="M19.5 13.5 12 21m0 0-7.5-7.5M12 21V3" />
+      </svg>
+
+      <!-- Das Input-Form-Feld -->
+      <div class="w-full max-w-xl md:max-w-2xl px-4">
+        <%= render "content_reports/llm_input" %>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- 3. UNTERER SPACER -->
+  <div class="h-2 invisible"></div>
+
 </div>
+
+<style>
+  /* -------------------------------------------------------------------------
+     Exakte Typografie-Variablen & Transitions aus deiner Index-Datei
+     ------------------------------------------------------------------------- */
+  #page-container {
+    --title-font-size: clamp(4.5rem, 11vw, 11.5rem);
+  }
+
+  .transition-morph {
+    will-change: font-size;
+    transition: font-size 1.0s cubic-bezier(0.16, 1, 0.3, 1);
+  }
+
+  /* -------------------------------------------------------------------------
+     Saubere und stabile Bouncing-Animation (Keine unkontrollierte Skalierung)
+     ------------------------------------------------------------------------- */
+  .custom-bounce {
+    animation: stableImpactBounce 1.4s infinite ease-in-out;
+    transform-origin: bottom center;
+    will-change: transform;
+  }
+
+  @keyframes stableImpactBounce {
+    0%, 100% {
+      transform: translateY(0) scaleY(1) scaleX(1);
+    }
+    5% {
+      /* Ein schöner, sichtbarer Knautsch-Effekt beim Aufkommen auf dem Chatfeld */
+      transform: translateY(1px) scaleY(0.8) scaleX(1.15);
+    }
+    15% {
+      transform: translateY(-1px) scaleY(1.08) scaleX(0.96);
+    }
+    50% {
+      /* Angenehmer, kontrollierter Sprung nach oben (14px) */
+      transform: translateY(-14px) scaleY(1) scaleX(1);
+    }
+    85% {
+      transform: translateY(-0.5px) scaleY(1.02) scaleX(0.99);
+    }
+  }
+</style>
