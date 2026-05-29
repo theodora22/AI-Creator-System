@@ -13,12 +13,12 @@
 
         <div class="flex flex-col items-end space-y-1 -mt-6 -mr-6 select-none">
           <% if user_signed_in? %>
-            <%= link_to "Log out", destroy_user_session_path, data: { turbo_method: :delete }, class: "text-xs font-semibold text-gray-400 hover:text-gray-700 underline decoration-gray-300 hover:decoration-gray-700 underline-offset-4 transition duration-150 ease-in-out cursor-pointer" %>
-            <span class="text-[9px] text-gray-400 font-bold uppercase tracking-wider">
+            <%= link_to "Log out", destroy_user_session_path, data: { turbo_method: :delete }, class: "text-xs font-semibold text-gray-400 hover:text-gray-700 transition duration-150 ease-in-out cursor-pointer" %>
+            <span class="text-[9px] text-gray-400 font-semibold uppercase tracking-wider">
               <%= current_user.email %>
             </span>
           <% else %>
-            <%= link_to "Sign in", new_user_session_path, class: "text-xs font-semibold text-gray-400 hover:text-gray-700 underline decoration-gray-300 hover:decoration-gray-700 underline-offset-4 transition duration-150 ease-in-out" %>
+            <%= link_to "Sign in", new_user_session_path, class: "text-xs font-semibold text-gray-400 hover:text-gray-700 transition duration-150 ease-in-out" %>
           <% end %>
         </div>
       </div>
@@ -26,15 +26,15 @@
       <!-- Title & Giant Button Row (Aligned on the exact same baseline and right-aligned with the table grid) -->
       <div class="flex flex-col md:flex-row md:items-end justify-between w-full select-none ml-6 max-w-7xl lg:max-w-[90vw] transition-morph" style="margin-bottom: var(--header-margin-bottom);">
         <div class="w-full md:w-auto">
-          <h1 class="font-black text-[#FF5733] leading-[0.76] tracking-tighter uppercase transition-morph" style="font-size: var(--title-font-size);">
+          <h1 class="font-medium text-[#FF5733] leading-[0.76] tracking-tighter uppercase transition-morph" style="font-size: var(--title-font-size);">
             HERE ARE<br>YOUR REPORTS
           </h1>
         </div>
-        
+
         <div class="mt-4 md:mt-0 md:mb-0 ml-6 md:ml-0 flex items-end gap-x-2 group">
           <!-- Giant Plus Link -->
-          <%= link_to new_content_report_path, class: "group inline-flex items-end cursor-pointer select-none" do %>
-            <svg xmlns="http://www.w3.org/2000/svg" class="select-none translate-y-[18.75%] transition-morph" style="width: var(--plus-size); height: var(--plus-size);" viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round">
+          <%= link_to new_content_report_path, class: "group inline-flex items-end cursor-pointer select-none transition-morph", style: "margin-right: var(--plus-margin-right);" do %>
+            <svg xmlns="http://www.w3.org/2000/svg" class="select-none transition-morph" style="width: var(--plus-size); height: var(--plus-size); transform: translateY(var(--plus-translate-y));" viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round">
               <defs>
                 <clipPath id="plus-clip">
                   <rect x="0" y="0" width="24" height="24" class="arrow-mask-rect" />
@@ -52,8 +52,8 @@
           <% end %>
 
           <!-- Text Link -->
-          <%= link_to new_content_report_path, class: "inline-flex items-end text-xl md:text-2xl font-bold text-black hover:text-[#FF5733] cursor-pointer whitespace-nowrap lowercase pb-2 transition-morph compact-text-link" do %>
-            <span class="underline underline-offset-8">new report</span>
+          <%= link_to new_content_report_path, class: "inline-flex items-end text-xl md:text-2xl font-semibold text-black hover:text-[#FF5733] cursor-pointer whitespace-nowrap lowercase pb-2 transition-morph compact-text-link", style: "position: relative; top: var(--text-link-top);" do %>
+            <span>new report</span>
           <% end %>
         </div>
       </div>
@@ -62,11 +62,11 @@
       <div id="reports-table-container" class="w-full overflow-x-auto pb-6 scrollbar-thin mt-[50px] max-w-7xl lg:max-w-[90vw] ml-6" style="margin-top: 50px;">
         <table class="w-full min-w-[700px] md:min-w-full table-auto border-collapse">
           <thead>
-            <tr class="text-lg md:text-2xl font-black text-black lowercase select-none">
-              <th class="pb-2 text-left font-black w-2/5">title</th>
-              <th class="pb-2 text-left font-black w-1/4">platform</th>
-              <th class="pb-2 text-left font-black w-1/5">created</th>
-              <th class="pb-2 text-right font-black w-1/10"></th>
+            <tr class="text-lg md:text-2xl font-semibold text-black lowercase select-none">
+              <th class="pb-2 text-left font-semibold w-2/5">title</th>
+              <th class="pb-2 text-left font-semibold w-1/4">platform</th>
+              <th class="pb-2 text-left font-semibold w-1/5">created</th>
+              <th class="pb-2 text-right font-semibold w-1/10"></th>
             </tr>
             <!-- Premium Rounded Capsule Divider Line -->
             <tr>
@@ -78,23 +78,23 @@
           <tbody>
             <% if @content_reports.any? %>
               <% @content_reports.each_with_index do |content_report, index| %>
-                <% is_hidden = index >= 6 %>
+                <% is_hidden = index >= 5 %>
                 <tr class="border-b border-gray-200 hover:bg-black/[0.01] transition-colors duration-150<%= " hidden-report-row reveal-row" if is_hidden %>">
-                  <td class="py-5 text-lg md:text-xl lg:text-2xl font-bold text-black tracking-tight pr-4">
+                  <td class="py-5 text-lg md:text-xl lg:text-2xl font-semibold text-black tracking-tight pr-4">
                     <%= link_to content_report.content_title.presence || "Untitled Report", content_report_path(content_report), class: "hover:text-[#FF5733] transition-colors break-words" %>
                   </td>
-                  <td class="py-5 pr-4 text-base md:text-lg lg:text-xl font-bold text-[#FF5733] whitespace-nowrap">
+                  <td class="py-5 pr-4 text-base md:text-lg lg:text-xl font-semibold text-[#FF5733] whitespace-nowrap">
                     <%= content_report.content_platform.presence || "Draft" %>
                   </td>
-                  <td class="py-5 text-base md:text-lg lg:text-xl font-bold text-black tracking-tight whitespace-nowrap">
+                  <td class="py-5 text-base md:text-lg lg:text-xl font-semibold text-black tracking-tight whitespace-nowrap">
                     <%= content_report.created_at.strftime("%B %d, %Y") %>
                   </td>
-                  <td class="py-5 text-right text-base md:text-lg lg:text-xl font-bold tracking-tight select-none text-black whitespace-nowrap">
+                  <td class="py-5 text-right text-base md:text-lg lg:text-xl font-semibold tracking-tight select-none text-black whitespace-nowrap">
                     <%= link_to "view", content_report_path(content_report), class: "hover:text-[#FF5733] transition-colors" %>
                     <span class="text-gray-300 mx-1">/</span>
                     <%= link_to "edit", edit_content_report_path(content_report), class: "hover:text-[#FF5733] transition-colors" %>
                     <span class="text-gray-300 mx-1">/</span>
-                    <%= link_to "delete", content_report_path(content_report), data: { turbo_method: :delete, turbo_confirm: "Are you sure?" }, class: "text-[#FF5733] hover:underline" %>
+                    <%= link_to "delete", content_report_path(content_report), data: { turbo_method: :delete, turbo_confirm: "Are you sure?" }, class: "text-[#FF5733]" %>
                   </td>
                 </tr>
               <% end %>
@@ -102,7 +102,7 @@
               <tr>
                 <td colspan="4" class="text-center py-20 border-2 border-dashed border-gray-200 rounded-2xl bg-white/50">
                   <p class="text-gray-400 font-medium mb-4">No reports created yet.</p>
-                  <%= link_to new_content_report_path, class: "inline-flex items-center text-sm font-semibold text-[#FF5733] hover:underline" do %>
+                  <%= link_to new_content_report_path, class: "inline-flex items-center text-sm font-semibold text-[#FF5733]" do %>
                     <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="4.5" stroke="currentColor" class="w-4 h-4 text-[#FF5733] mr-1.5" stroke-linecap="round" stroke-linejoin="round">
                       <path d="M12 4.5v15m7.5-7.5h-15" />
                     </svg>
@@ -117,9 +117,9 @@
     </div>
 
     <!-- Footer see more -->
-    <% if @content_reports.size > 6 %>
+    <% if @content_reports.size > 5 %>
       <button id="see-more-trigger" class="w-full flex flex-col items-center justify-center pt-8 pb-4 select-none cursor-pointer hover:opacity-70 transition-opacity focus:outline-none border-none bg-transparent">
-        <span class="text-base md:text-lg font-bold text-black mb-2 tracking-tight">see more</span>
+        <span class="text-base md:text-lg font-semibold text-black mb-2 tracking-tight">see more</span>
         <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="4" stroke="currentColor" class="w-6 h-6 md:w-8 md:h-8 text-black">
           <path stroke-linecap="round" stroke-linejoin="round" d="M19.5 13.5 12 21m0 0-7.5-7.5M12 21V3" />
         </svg>
@@ -138,24 +138,34 @@
     --title-font-size: clamp(4.5rem, 11vw, 11.5rem);
     --header-margin-bottom: clamp(5rem, 8vw, 8rem);
     --plus-size: 128px;
+    --plus-margin-right: -25px;
+    --plus-translate-y: calc(18.75% - 10px);
+    --text-link-top: 10px;
   }
-  
+
   @media (min-width: 768px) {
     #page-container {
       --plus-size: 160px;
+      --plus-margin-right: -53px;
+      --plus-translate-y: calc(18.75% - 10px);
     }
   }
-  
+
   /* Compact state triggered on click */
   #page-container.compact-header {
     --title-font-size: clamp(2.5rem, 5.5vw, 4.5rem) !important;
     --header-margin-bottom: 2rem !important;
     --plus-size: 48px !important;
+    --plus-margin-right: -5px !important;
+    --plus-translate-y: calc(18.75% - 3px) !important;
+    --text-link-top: 0px !important;
   }
-  
+
   @media (min-width: 768px) {
     #page-container.compact-header {
       --plus-size: 64px !important;
+      --plus-margin-right: -6px !important;
+      --plus-translate-y: calc(18.75% - 4px) !important;
     }
   }
 
@@ -164,16 +174,15 @@
     font-size: 1.125rem !important; /* text-lg */
     padding-bottom: 2px !important;
   }
-  
-  #page-container.compact-header .compact-text-link span {
-    --underline-offset: -5px !important;
-  }
+
 
   /* GPU Layer and Property-Specific Transitions (Avoids transition: all stutters) */
   .transition-morph {
-    will-change: font-size, margin-bottom, width, height, transform, padding;
+    will-change: font-size, margin-bottom, margin-right, top, width, height, transform, padding;
     transition: font-size 1.0s cubic-bezier(0.16, 1, 0.3, 1),
                 margin-bottom 1.0s cubic-bezier(0.16, 1, 0.3, 1),
+                margin-right 1.0s cubic-bezier(0.16, 1, 0.3, 1),
+                top 1.0s cubic-bezier(0.16, 1, 0.3, 1),
                 width 1.0s cubic-bezier(0.16, 1, 0.3, 1),
                 height 1.0s cubic-bezier(0.16, 1, 0.3, 1),
                 transform 1.0s cubic-bezier(0.16, 1, 0.3, 1),
@@ -186,24 +195,27 @@
   .hidden-report-row {
     display: none;
   }
-  
+
   /* Reveal when compact-header is active */
   #page-container.compact-header .hidden-report-row {
     display: table-row !important;
   }
 
-  /* Scroll Reveal Base State (Smooth Fade & Slide Up) */
+  /* Scroll Reveal Base State with Premium Apple-like Blur */
   .reveal-row {
     opacity: 0 !important;
+    filter: blur(8px) !important;
     transform: translateY(30px) !important;
     transition: opacity 0.8s cubic-bezier(0.16, 1, 0.3, 1),
+                filter 0.8s cubic-bezier(0.16, 1, 0.3, 1),
                 transform 0.8s cubic-bezier(0.16, 1, 0.3, 1) !important;
-    will-change: opacity, transform;
+    will-change: opacity, filter, transform;
   }
 
   /* Visible State once intersected */
   .reveal-row.is-visible {
     opacity: 1 !important;
+    filter: blur(0) !important;
     transform: translateY(0) !important;
   }
 
@@ -276,7 +288,7 @@
       if (seeMoreBtn && pageContainer && reportsTable) {
         seeMoreBtn.addEventListener("click", (e) => {
           e.preventDefault();
-          
+
           // 1. Toggle compact morphing state via CSS variables
           pageContainer.classList.add("compact-header");
 

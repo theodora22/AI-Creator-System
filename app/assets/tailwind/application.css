@@ -55,3 +55,10 @@
 .group:hover .arrow-mask-rect {
   height: 24px;
 }
+
+/* -------------------------------------------------------------------------
+   Global Font override: Helvetica Neue everywhere
+   ------------------------------------------------------------------------- */
+body, button, input, select, textarea, table, th, td, h1, h2, h3, a, span, p, div, li, ul, ol, .font-sans, [class*="font-sans"] {
+  font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif !important;
+}
