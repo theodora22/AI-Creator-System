@@ -1,89 +1,287 @@
-<div class="fixed inset-0 -z-10 pointer-events-none" style="background: #FFFDF3;"></div>
+<div id="page-container" class="fixed inset-0 bg-[#FFFDF6] flex flex-col justify-between pt-12 pb-12 pr-12 pl-6 md:pl-0 box-border overflow-y-auto font-sans">
 
- <div class="w-full py-10 max-w-2xl mx-auto">
+  <div class="w-full flex-1 flex flex-col justify-between">
 
-    <div class="flex items-center justify-between mb-8">
-      <%= link_to "← Back", content_reports_path, class: "text-sm text-gray-400 hover:text-[#E25C37] transition-colors" %>
-      <div class="flex items-center gap-3">
-        <%= link_to "Edit", edit_content_report_path(@content_report), class: "text-sm text-gray-600 hover:text-[#E25C37] transition-colors" %>
-        <%= link_to "Delete", content_report_path(@content_report), data: { turbo_method: :delete, turbo_confirm: "Are you sure?" }, class: "text-sm text-red-500 hover:underline" %>
+    <div>
+      <div class="flex justify-between items-start w-full mb-8 select-none">
+        <div class="flex items-center select-none -mt-6 md:ml-6 relative z-50">
+          <%= link_to root_path, class: "relative z-50 cursor-pointer block" do %>
+            <%= image_tag "logo.png", alt: "ContentFlow Logo", class: "h-9 w-auto object-contain hover:opacity-80 transition-opacity cursor-pointer" %>
+          <% end %>
+        </div>
+
+        <div class="flex flex-col items-end space-y-1 -mt-6 select-none font-semibold" style="margin-right: -20px;">
+          <% if user_signed_in? %>
+            <span class="text-[9px] text-gray-400 font-semibold uppercase tracking-wider">
+              <%= current_user.email %>
+            </span>
+          <% end %>
+        </div>
       </div>
+
+      <div class="flex flex-col md:flex-row md:items-start justify-between w-full select-none gap-8" style="margin-bottom: 30px;">
+        <div class="max-w-4xl relative" style="padding-left: 36px;">
+          <div class="absolute top-0" style="left: 25px; width: 6px; height: 100%; background-color: #FF5733; border-radius: 9999px; z-index: 10;"></div>
+
+          <h1 class="font-medium text-[#FF5733] leading-[0.76] tracking-tighter uppercase" style="font-size: var(--title-font-size);">
+            <% words = @content_report.content_title.to_s.split %>
+            <% if words.size >= 3 %>
+              <% part1_size = (words.size / 3.0).ceil %>
+              <% part2_size = ((words.size - part1_size) / 2.0).ceil %>
+              <span class="block whitespace-nowrap"><%= words[0...part1_size].join(" ") %></span>
+              <span class="block whitespace-nowrap"><%= words[part1_size...(part1_size + part2_size)].join(" ") %></span>
+              <span class="block whitespace-nowrap"><%= words[(part1_size + part2_size)..].join(" ") %></span>
+            <% else %>
+              <% word = @content_report.content_title.to_s.gsub(/\s+/, "") %>
+              <% part1_size = (word.length / 3.0).ceil %>
+              <% part2_size = ((word.length - part1_size) / 2.0).ceil %>
+              <span class="block whitespace-nowrap"><%= word[0...part1_size] %></span>
+              <span class="block whitespace-nowrap"><%= word[part1_size...(part1_size + part2_size)] %></span>
+              <span class="block whitespace-nowrap"><%= word[(part1_size + part2_size)..].presence || "&nbsp;".html_safe %></span>
+            <% end %>
+          </h1>
+        </div>
+
+        <div id="delete-report-container" class="select-none">
+          <%= link_to content_report_path(@content_report), id: "delete-report-link", data: { turbo_method: :delete, turbo_confirm: "Are you sure?" }, class: "flex items-center gap-x-2.5 group cursor-pointer select-none" do %>
+            <svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6 md:w-8 md:h-8 text-[#FF5733] transition-transform duration-200 group-hover:scale-110 group-active:scale-95" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="4">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M6 18 18 6M6 6l12 12" />
+            </svg>
+            <span class="text-2xl md:text-3xl font-semibold text-black group-hover:text-[#FF5733] group-active:text-[#FF5733] group-focus:text-[#FF5733] transition-colors duration-200 lowercase">delete</span>
+          <% end %>
+        </div>
+      </div>
+
+      <% if @content_report.content_hook.present? %>
+        <div class="select-none max-w-3xl flex flex-col" style="margin-left: 36px; margin-bottom: 10px;">
+          <p class="text-black font-semibold text-xl lowercase select-none" style="line-height: 1.1; margin-bottom: 0px;">
+            hook
+          </p>
+          <p class="text-2xl md:text-3xl font-semibold text-black leading-tight break-words" style="margin-top: 0;">
+            <%= @content_report.content_hook %>
+          </p>
+        </div>
+      <% end %>
+
+      <% if @content_report.content_type.present? %>
+        <div class="max-w-2xl select-none flex flex-col" style="margin-left: 36px; margin-bottom: 10px;">
+          <p class="text-xl font-semibold text-black lowercase" style="line-height: 1.1; margin-bottom: 2px;">type</p>
+          <p class="text-lg font-medium text-gray-500 lowercase" style="line-height: 1.2; margin-top: 0;"><%= @content_report.content_type %></p>
+        </div>
+      <% end %>
+
+      <% if @content_report.content_length.present? %>
+        <div class="max-w-2xl select-none flex flex-col" style="margin-left: 36px; margin-bottom: 10px;">
+          <p class="text-xl font-semibold text-black lowercase" style="line-height: 1.1; margin-bottom: 2px;">length</p>
+          <p class="text-lg font-medium text-gray-500 lowercase" style="line-height: 1.2; margin-top: 0;"><%= @content_report.content_length %></p>
+        </div>
+      <% end %>
+
+      <% if @content_report.system_prompt.present? %>
+        <div class="max-w-3xl select-none flex flex-col" style="margin-left: 36px; margin-bottom: 10px;">
+          <p class="text-xl font-semibold text-black lowercase" style="line-height: 1.1; margin-bottom: 0px;">system prompt</p>
+          <p class="text-base md:text-lg font-medium text-gray-500 leading-relaxed lowercase" style="line-height: 1.4; margin-top: 0;">
+            <%= @content_report.system_prompt %>
+          </p>
+        </div>
+      <% end %>
+
+      <div id="chats-table-container" class="w-[calc(100%-1.5rem)] pb-12" style="margin-left: 36px; margin-top: 50px;">
+
+        <div class="w-full overflow-x-auto pb-6 scrollbar-thin">
+          <table class="w-full min-w-[700px] md:min-w-full table-auto border-collapse">
+            <thead>
+              <tr class="text-lg md:text-2xl font-semibold text-black lowercase select-none align-bottom">
+                <th class="pb-2 text-left font-semibold w-7/12">chats for this report</th>
+                <th class="pb-3 text-left font-semibold w-1/4 whitespace-nowrap">last updated</th>
+                <th class="pb-2 text-right font-semibold w-2/12 align-bottom">
+                  <div id="start-new-chat-container" class="inline-flex items-center justify-end select-none">
+                    <%= button_to content_report_chats_path(@content_report), method: :post, class: "group flex items-center gap-x-2.5 cursor-pointer bg-transparent border-none p-0 text-left focus:outline-none" do %>
+                      <svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6 md:w-8 md:h-8 text-[#FF5733] transition-transform duration-200 group-hover:scale-110 group-active:scale-95" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="4">
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M12 4.5v15m7.5-7.5h-15" />
+                      </svg>
+                      <span class="text-2xl md:text-3xl font-semibold text-black group-hover:text-[#FF5733] group-active:text-[#FF5733] transition-colors duration-200 lowercase whitespace-nowrap">
+                        <span>start new chat</span>
+                      </span>
+                    <% end %>
+                  </div>
+                </th>
+              </tr>
+              <tr>
+                <td colspan="3" class="pb-3 pt-1">
+                  <div class="h-[6px] bg-[#FF5733] w-full rounded-full"></div>
+                </td>
+              </tr>
+            </thead>
+            <tbody>
+              <% if @chats.any? %>
+                <% @chats.each_with_index do |chat, index| %>
+                  <% is_hidden = index >= 4 %>
+                  <tr class="border-b border-gray-200 hover:bg-black/[0.01] transition-colors duration-150<%= " hidden-chat-row" if is_hidden %>">
+                    <td class="py-5 text-lg md:text-xl font-semibold text-black tracking-tight pr-4">
+                      <%= link_to chat.title.presence || "untitled chat", chat_path(chat), class: "hover:text-[#FF5733] transition-colors break-words lowercase text-black" %>
+                    </td>
+                    <td class="py-5 pr-4 text-base md:text-lg font-semibold text-black whitespace-nowrap">
+                      <%= chat.updated_at.strftime("%B %d, %Y at %I:%M %p") %>
+                    </td>
+                    <td class="py-5 text-right text-base md:text-lg font-semibold tracking-tight select-none whitespace-nowrap">
+                      <%= link_to "delete", chat_path(chat), data: { turbo_method: :delete, turbo_confirm: "Are you sure you want to delete this chat?" }, class: "text-[#FF5733] lowercase" %>
+                    </td>
+                  </tr>
+                <% end %>
+              <% else %>
+                <tr>
+                  <td colspan="3" class="text-center py-16 border-2 border-dashed border-gray-200 rounded-2xl bg-white/50">
+                    <p class="text-gray-400 font-medium mb-4">No chats created yet for this report.</p>
+                  </td>
+                </tr>
+              <% end %>
+            </tbody>
+          </table>
+
+        <% if @chats.size > 4 %>
+          <button id="chats-see-more-trigger" class="w-full flex flex-col items-center justify-center pt-8 pb-4 select-none cursor-pointer hover:opacity-70 transition-opacity focus:outline-none border-none bg-transparent">
+            <span class="text-base md:text-lg font-semibold text-black mb-1 tracking-tight lowercase">see more</span>
+            <span class="text-2xl md:text-3xl font-semibold text-black leading-none">↓</span>
+          </button>
+        <% end %>
+      </div>
+
     </div>
-
-    <h1 class="text-5xl md:text-7xl font-black uppercase leading-[0.9] tracking-tight text-[#E25C37] mb-8">
-          <%= @content_report.content_title %>
-        </h1>
-
-    <div class="flex items-center gap-3 mb-8 text-sm text-gray-400">
-      <span class="px-2 py-1 rounded-full bg-orange-50 text-[#E25C37] text-xs font-medium">
-        <%= @content_report.content_platform || "Draft" %>
-      </span>
-      <span><%= @content_report.created_at.strftime("%B %d, %Y") %></span>
-    </div>
-
-    <% if @content_report.content_hook.present? %>
-      <div class="mb-6 border-l-2 border-[#E25C37] pl-4">
-        <p class="text-xs text-[#E25C37] font-medium uppercase tracking-wider mb-1">Hook</p>
-        <p class="text-sm text-[#1C1C1C] leading-relaxed"><%= @content_report.content_hook %></p>
-      </div>
-    <% end %>
-
-    <% if @content_report.content_type.present? %>
-      <div class="mb-6">
-        <p class="text-xs text-gray-400 font-medium uppercase tracking-wider mb-1">Type</p>
-        <p class="text-sm text-[#1C1C1C]"><%= @content_report.content_type %></p>
-      </div>
-    <% end %>
-
-    <% if @content_report.content_length.present? %>
-      <div class="mb-6">
-        <p class="text-xs text-gray-400 font-medium uppercase tracking-wider mb-1">Length</p>
-        <p class="text-sm text-[#1C1C1C]"><%= @content_report.content_length %></p>
-      </div>
-    <% end %>
-
-    <% if @content_report.system_prompt.present? %>
-      <div class="mb-8">
-        <p class="text-xs text-gray-400 font-medium uppercase tracking-wider mb-1">System Prompt</p>
-        <p class="text-sm text-[#1C1C1C] leading-relaxed whitespace-pre-wrap"><%= @content_report.system_prompt %></p>
-      </div>
-    <% end %>
-
-    <hr class="border-gray-100 mb-6">
-
-    <%= button_to "Start new chat", content_report_chats_path(@content_report), class: "bg-[#E25C37] hover:bg-[#c84e2e] text-white text-sm font-medium px-5 py-2.5 rounded-xl transition-colors duration-200" %>
 
   </div>
 </div>
 
-<!-- Clean, simple list of chats created under this specific report -->
-<div class="report-chats-list mt-8">
-  <h2 class="text-xl font-bold mb-4">Chats for this Report</h2>
-  
-  <% if @chats.any? %>
-    <ul class="divide-y divide-gray-200">
-      <% @chats.each do |chat| %>
-        <li class="py-4 flex justify-between items-center">
-          <div class="flex-grow">
-            <%= link_to chat_path(chat), class: "block hover:underline" do %>
-              <strong class="text-[#E25C37] text-lg"><%= chat.title.presence || "Untitled Chat" %></strong>
-              <span class="text-gray-400 text-xs block mt-1">
-                Last updated: <%= chat.updated_at.strftime("%B %d, %Y at %I:%M %p") %>
-              </span>
-            <% end %>
-          </div>
-          <div>
-            <%= button_to "Delete Chat", chat_path(chat),
-                          method: :delete,
-                          form: { data: { turbo_confirm: "Are you sure you want to delete this chat?" } },
-                          class: "btn btn-sm btn-danger cursor-pointer" %>
-          </div>
-        </li>
-      <% end %>
-    </ul>
-  <% else %>
-    <p class="text-gray-400 text-sm">No chats created yet for this report. Click "New chat" above to get started!</p>
-  <% end %>
-</div>
+<style>
+  /* -------------------------------------------------------------------------
+     Morphing Header Transition Variables & Custom Positioning
+     ------------------------------------------------------------------------- */
+  #page-container {
+    --title-font-size: clamp(4.5rem, 11vw, 11.5rem);
+  }
 
-</div>
+  #delete-report-container {
+    position: absolute;
+    right: 28px;
+    top: 72px;
+    z-index: 50;
+  }
+
+  @media (min-width: 768px) {
+    #delete-report-container {
+      top: 96px;
+    }
+  }
+
+  #delete-report-container a:active span,
+  #delete-report-container a:active svg,
+  #delete-report-container a:focus span,
+  #delete-report-container a:focus svg,
+  #delete-report-container a:focus-within span,
+  #delete-report-container a:focus-within svg {
+    color: #FF5733 !important;
+    transition: none !important;
+  }
+
+  /* -------------------------------------------------------------------------
+     Chats See More Scroll Reveal and Animations
+     ------------------------------------------------------------------------- */
+  .hidden-chat-row {
+    display: none;
+  }
+
+  #page-container.compact-chats .hidden-chat-row {
+    display: table-row !important;
+    animation: chatsFadeSlideIn 0.8s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+  }
+
+  @keyframes chatsFadeSlideIn {
+    0% { opacity: 0; transform: translateY(20px); }
+    100% { opacity: 1; transform: translateY(0); }
+  }
+
+  #chats-see-more-trigger {
+    transition: opacity 0.6s cubic-bezier(0.16, 1, 0.3, 1),
+                height 0.6s cubic-bezier(0.16, 1, 0.3, 1),
+                padding 0.6s cubic-bezier(0.16, 1, 0.3, 1),
+                margin 0.6s cubic-bezier(0.16, 1, 0.3, 1),
+                visibility 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+  }
+
+  #page-container.compact-chats #chats-see-more-trigger {
+    opacity: 0 !important;
+    pointer-events: none !important;
+    height: 0px !important;
+    padding-top: 0px !important;
+    padding-bottom: 0px !important;
+    margin-top: 0px !important;
+    margin-bottom: 0px !important;
+    visibility: hidden;
+    overflow: hidden;
+  }
+</style>
+
+<script>
+  (function() {
+    const initChatsSeeMore = () => {
+      const chatsBtn = document.getElementById("chats-see-more-trigger");
+      const pageContainer = document.getElementById("page-container");
+
+      if (chatsBtn && pageContainer) {
+        chatsBtn.addEventListener("click", (e) => {
+          e.preventDefault();
+          pageContainer.classList.add("compact-chats");
+        });
+      }
+    };
+
+    const initDeleteFeedback = () => {
+      const deleteLink = document.getElementById("delete-report-link");
+      if (deleteLink) {
+        const textSpan = deleteLink.querySelector("span");
+        const svgElement = deleteLink.querySelector("svg");
+
+        const makeOrange = () => {
+          if (textSpan) {
+            textSpan.style.setProperty("color", "#FF5733", "important");
+            textSpan.style.setProperty("transition", "none", "important");
+          }
+          if (svgElement) {
+            svgElement.style.setProperty("color", "#FF5733", "important");
+            svgElement.style.setProperty("transition", "none", "important");
+          }
+        };
+
+        const resetStyle = () => {
+          setTimeout(() => {
+            if (textSpan) {
+              textSpan.style.removeProperty("color");
+              textSpan.style.removeProperty("transition");
+            }
+            if (svgElement) {
+              svgElement.style.removeProperty("color");
+              svgElement.style.removeProperty("transition");
+            }
+          }, 1500);
+        };
+
+        deleteLink.addEventListener("mousedown", makeOrange);
+        deleteLink.addEventListener("touchstart", makeOrange, { passive: true });
+        deleteLink.addEventListener("pointerdown", makeOrange);
+        deleteLink.addEventListener("click", resetStyle);
+      }
+    };
+
+    const initAll = () => {
+      initChatsSeeMore();
+      initDeleteFeedback();
+    };
+
+    document.addEventListener("turbo:load", initAll);
+    if (document.readyState === "loading") {
+      document.addEventListener("DOMContentLoaded", initAll);
+    } else {
+      initAll();
+    }
+  })();
+</script>
